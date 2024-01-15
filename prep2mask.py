@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 if len(sys.argv) < 2:
     print("------------------------")
     print("Enter the mask file name")
-    print("Exemple: python program.py file.mask")
+    print("Example: python program.py file.mask")
     print("------------------------")
     sys.exit(1)  
 
