@@ -1,6 +1,6 @@
-### Pre and Post processing tools for WW3
+## Pre and Post processing tools for WW3
 
-## WW3 regular grid generation 
+### WW3 regular grid generation 
 
 I'm using gridgen (https://github.com/NOAA-EMC/gridgen) to generate regular grids. Its a matlab program, but executing at my local
 machine with octave. Steps:
