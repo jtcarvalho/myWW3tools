@@ -53,7 +53,7 @@ plt.pcolormesh(mask)
 plt.colorbar()
 plt.show()
 
-
+#test
 np.savetxt(input_arq+str('2'),mask,fmt='%d')
 
 
