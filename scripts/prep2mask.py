@@ -30,22 +30,22 @@ lonx=mask.shape[1]
 for i in range(1,2):
     for j in range(1,lonx-1):
         if mask[i,j]==1: mask[i,j]=2
-        else: print ('skipping land...')
+        else: print ('skipping land... index: ', i, j)
 
 for i in range(1,latx-1):
     for j in range(1,2):
         if mask[i,j]==1: mask[i,j]=2
-        else: print ('eh terra')
+        else: print ('skipping land... index: ',i, j)
 
 for i in range(1,latx-1):
     for j in range(lonx-2,lonx-1):
         if mask[i,j]==1: mask[i,j]=2
-        else: print ('skipping land...')
+        else: print ('skipping land... index: ',i,  j)
 
 for i in range(latx-2,latx-1):
     for j in range(1,lonx-1):
         if mask[i,j]==1: mask[i,j]=2
-        else: print ('skipping land...')
+        else: print ('skipping land... index: ',i, j)
 
 
 
@@ -53,7 +53,6 @@ plt.pcolormesh(mask)
 plt.colorbar()
 plt.show()
 
-#test
 np.savetxt(input_arq+str('2'),mask,fmt='%d')
 
 
