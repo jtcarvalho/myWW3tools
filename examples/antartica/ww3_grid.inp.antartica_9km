@@ -1,0 +1,38 @@
+$ WAVEWATCH III Grid preprocessor input file
+$ ------------------------------------------
+  'ANT  9km x 9km'
+$
+   1.1  0.04177248  25  24 0.
+$
+   F T T T F T
+$
+   240.   120.   180.  10.
+$
+   &MISC CICE0 = 0.25, CICEN = 0.75, FLAGTR = 4 /
+   &FLX4 CDFAC = 1.0 /
+   &SIN6 SINA0 = 0.090, SINFC = 6.00 /
+   &SDS6 SDSA1 = 4.75E-06, SDSA2 = 7E-05 /
+   &SWL6 SWLB1 = 0.41E-02 /
+END OF NAMELISTS
+$
+ 'RECT' T 'NONE'
+1081     469
+ 5.00     5.00   60.00
+260.0000         -79.0000         1.00
+-0.10   2.50  40  0.001  1  1 '(....)'  NAME  './antartica_9km.dep'
+$ Sub-grid information
+50  0.01  1  1  '(....)'  NAME  './antartica_9km.obs'
+$ Mask Information
+60  1  1  '(....)'  NAME  './antartica_9km.mask' 
+$
+$    0     0     F
+$    
+$    0     0     F   
+$
+$    0     0
+$
+    0.    0.    0.    0.       0
+$
+$ -------------------------------------------------------------------- $
+$ End of input file                                                    $
+$ -------------------------------------------------------------------- $
