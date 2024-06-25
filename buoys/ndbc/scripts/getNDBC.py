@@ -1,4 +1,4 @@
-from __future__ import unicode_literals #para colocar non-ascii caracter
+from __future__ import unicode_literals 
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
@@ -13,23 +13,12 @@ import xarray as xr
 import netCDF4 as nc 
 from datetime import datetime 
 from NDBC.NDBC import DataBuoy
+
 DB = DataBuoy()
-
-
-#idbuoy = '46042'   #36.785 N 122.396 W  - US. WestCoast ok
-#idbuoy = '41047'   #27.465 N 71.452 W   - US. EastCoast ok
-#idbuoy = '31051'   #25.283 S 44.933 W   - Santos-Brasil
-#idbuoy = '31005'   #19.000 S 34.000 W   - ES-Brasil
-#idbuoy = '56055'   #25.000 S 100.000 E  - West Australia
-#idbuoy = '61002'   #42.102 N 4.703 E    - South France
-#idbuoy = '62146'    #57.200 N 2.100 E    - North Sea
-#idbuoy = '51003'    #19.196 N 160.639 W  - Western Hawaii
-#idbuoy = '42001'    
-idbuoy = 'yrsv2'
-
 DB.set_station_id(idbuoy)  
 DB.get_station_metadata()
 
+#choose the period (year, month, day, hour,min)
 start_date = datetime(2019, 11, 1, 0, 0)
 end_date = datetime(2019, 12, 31, 23, 0)
 
@@ -40,6 +29,7 @@ start_date_n = (start_date.strftime('%Y%m%d'))
 
 DB.get_data(years=year_range , datetime_index=True, data_type='stdmet')
 
+#checking data availability
 df = DB.data.get('stdmet').get('data')
 wvht = df[~df['WVHT'].isna()]
 print("The first time available is: ", wvht.index[0].to_pydatetime())
@@ -47,6 +37,7 @@ print("The last time available is: ", wvht.index[-1].to_pydatetime())
 
 units_dict = DB.data.get('stdmet').get('meta').get('units')
 
+#getting the data during the choosen time period
 wvht.index = wvht.index.to_pydatetime()
 mask = (wvht.index > start_date) & (wvht.index <= end_date)
 wvht = wvht.loc[mask]
@@ -56,6 +47,7 @@ xr_ds.to_netcdf(path='./'+str(idbuoy)+'.nc', mode='w', format=None, group=None,
 engine=None, encoding=None, unlimited_dims=None, compute=True,\
 invalid_netcdf=False)
 
+#saving to netcdf files
 keys_list = list(units_dict.keys())
 ds = nc.Dataset('./'+str(idbuoy)+'.nc',mode='a')
 var_names = ds.variables.keys()
