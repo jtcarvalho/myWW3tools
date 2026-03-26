@@ -1,7 +1,6 @@
-## Pre and Post processing tools for WW3
+## Pre-processing tools for WW3
 
-This repository contains my tools for WW3. I will try to update the old ones (some of then are in python 2.x) and include new scripts.
+This repository contains my tools for WW3.
 
-Usually on folder examples, there are the files to test the scripts
-
-Its an ongoing task....
+1) Generate regular grid with python
+2) Generate boundary files to be used on a parent grid as Bondary Condition (ongoing task....)
