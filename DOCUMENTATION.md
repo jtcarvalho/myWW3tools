@@ -1,4 +1,4 @@
-# myWW3tools — Quickstart & Documentation
+# myWW3tools —  Documentation
 
 > Python tools for generating WAVEWATCH III (WW3) grid files from geographic bounds.
 > Inspired by and compatible with the NOAA-EMC **gridgen** MATLAB package
@@ -459,7 +459,7 @@ shallow coastal cells or leave isolated lake pixels classified as ocean.
 1. **Hardcoded values in `interpBatMaskWW3.py` and `interpObsWW3.py`**The domain bounds and grid sizes are set to the Rio de Janeiro example.
    Before using these scripts for a different domain, edit the seven parameters
    at the top of each file.
-2. **No real sub-grid obstructions**`genWW3grid_fromBounds.py` writes an all-zero `.obs` file.Sub-grid obstructions matter mainly for wave propagation through narrow
+2. **No real sub-grid obstructions** `genWW3grid_fromBounds.py` writes an all-zero `.obs` file.Sub-grid obstructions matter mainly for wave propagation through narrow
    straits (channels narrower than ~3× the grid cell). If your domain contains
    significant narrow passages, consider post-processing with a dedicated tool
    or the original MATLAB `create_obstr.m`.
