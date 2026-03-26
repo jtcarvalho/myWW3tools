@@ -59,7 +59,7 @@ bathymetry:
 # OUTPUT
 # -----------------------------------------------------------------------------
 output:
-  directory: rio_grid    # output directory (created automatically)
+  directory: ../output/rio_grid    # output directory (created automatically)
   prefix:    rio         # filename prefix → rio.dep, rio.mask, rio.obs, rio.meta
 
 
@@ -76,7 +76,7 @@ output:
 #   dx: 0.036         # 2.16 arc-minutes
 #   dy: 0.036
 # output:
-#   directory: rio_grid
+#   directory: ../output/rio_grid
 #   prefix: rio
 
 # --- Antarctica (9 km resolution) ---
@@ -88,7 +88,7 @@ output:
 #   dx: 0.0833        # 5 arc-minutes
 #   dy: 0.0833
 # output:
-#   directory: antartica_grid
+#   directory: ../output/antartica_grid
 #   prefix: antartica_9km
 
 # --- Global grid (0.5 degree resolution) ---
@@ -100,7 +100,7 @@ output:
 #   dx: 0.5
 #   dy: 0.5
 # output:
-#   directory: global_grid
+#   directory: ../output/global_grid
 #   prefix: global_0p5deg
 
 # --- North Atlantic (0.25 degree) ---
@@ -112,7 +112,7 @@ output:
 #   dx: 0.25
 #   dy: 0.25
 # output:
-#   directory: natl_grid
+#   directory: ../output/natl_grid
 #   prefix: north_atlantic
 
 
