@@ -1,7 +1,7 @@
 # myWW3tools — Quickstart & Documentation
 
-> Python tools for generating WAVEWATCH III (WW3) grid files from geographic bounds.  
-> Inspired by and compatible with the NOAA-EMC **gridgen** MATLAB package  
+> Python tools for generating WAVEWATCH III (WW3) grid files from geographic bounds.
+> Inspired by and compatible with the NOAA-EMC **gridgen** MATLAB package
 > ([github.com/NOAA-EMC/gridgen](https://github.com/NOAA-EMC/gridgen)).
 
 ---
@@ -30,12 +30,12 @@ This toolkit replaces the NOAA-EMC **gridgen** MATLAB package with a pure-Python
 workflow. Given only a bounding box and a grid resolution, it produces the four
 ASCII grid files that WW3's pre-processor (`ww3_grid`) requires:
 
-| File | Contents |
-|------|----------|
+| File              | Contents                                                         |
+| ----------------- | ---------------------------------------------------------------- |
 | `{prefix}.dep`  | Bathymetry (integers, millimetres, scale factor 0.001 → metres) |
-| `{prefix}.mask` | Land/sea mask (0 = land, 1 = ocean, 2 = open boundary) |
-| `{prefix}.obs`  | Sub-grid obstacles (percentage blockage per cell edge) |
-| `{prefix}.meta` | Grid metadata for embedding in `ww3_grid.inp` |
+| `{prefix}.mask` | Land/sea mask (0 = land, 1 = ocean, 2 = open boundary)           |
+| `{prefix}.obs`  | Sub-grid obstacles (percentage blockage per cell edge)           |
+| `{prefix}.meta` | Grid metadata for embedding in `ww3_grid.inp`                  |
 
 The output format is identical to that produced by MATLAB gridgen, so the files
 can be used directly with any WW3 build.
@@ -72,14 +72,14 @@ Install with pip (or conda):
 pip install numpy scipy xarray netcdf4 pyyaml matplotlib
 ```
 
-| Package | Purpose |
-|---------|---------|
-| `numpy` | Array operations |
-| `scipy` | `RegularGridInterpolator` / `griddata` for bathymetry re-gridding |
-| `xarray` | NetCDF reading (lazy, efficient subsetting) |
-| `netcdf4` | NetCDF backend for xarray |
-| `pyyaml` | Parsing `config_bounds.yaml` |
-| `matplotlib` | Plotting in `prepMaskWW3.py` |
+| Package        | Purpose                                                               |
+| -------------- | --------------------------------------------------------------------- |
+| `numpy`      | Array operations                                                      |
+| `scipy`      | `RegularGridInterpolator` / `griddata` for bathymetry re-gridding |
+| `xarray`     | NetCDF reading (lazy, efficient subsetting)                           |
+| `netcdf4`    | NetCDF backend for xarray                                             |
+| `pyyaml`     | Parsing `config_bounds.yaml`                                        |
+| `matplotlib` | Plotting in `prepMaskWW3.py`                                        |
 
 **Optional — download bathymetry on-the-fly:**
 
@@ -87,9 +87,9 @@ pip install numpy scipy xarray netcdf4 pyyaml matplotlib
 pip install pygmt        # also requires GMT installed on the system
 ```
 
-**Bathymetry data (recommended):**  
-Download GEBCO 2023 global grid (free) from <https://www.gebco.net/>.  
-ETOPO 2022 is available from <https://www.ncei.noaa.gov/products/etopo-global-relief-model>.
+**Bathymetry data (recommended):**
+Download GEBCO 2023 global grid (free) from [https://www.gebco.net/](https://www.gebco.net/).
+ETOPO 2022 is available from [https://www.ncei.noaa.gov/products/etopo-global-relief-model](https://www.ncei.noaa.gov/products/etopo-global-relief-model).
 
 ---
 
@@ -177,6 +177,7 @@ regular grid, interpolates bathymetry, derives the land/sea mask, and writes all
 four WW3 ASCII files.
 
 **Usage:**
+
 ```bash
 python genWW3grid_fromBounds.py [config_file.yaml]
 # default config file: config_bounds.yaml
@@ -184,22 +185,22 @@ python genWW3grid_fromBounds.py [config_file.yaml]
 
 **Config keys:**
 
-| Key | Type | Required | Description |
-|-----|------|----------|-------------|
-| `grid.lon_min` | float | ✓ | West bound (degrees, −180–180 or 0–360) |
-| `grid.lon_max` | float | ✓ | East bound |
-| `grid.lat_min` | float | ✓ | South bound |
-| `grid.lat_max` | float | ✓ | North bound |
-| `grid.dx` | float | ✓ | Longitude spacing (degrees) |
-| `grid.dy` | float | ✓ | Latitude spacing (degrees) |
-| `grid.zdep` | float | — | Depth threshold m (default −0.10) |
-| `grid.zmin` | float | — | Min depth for WW3 m (default 2.50) |
-| `bathymetry.source` | str | — | `file` (default) or `pygmt` |
-| `bathymetry.file` | str | ✓ (if source=file) | Path to NetCDF bathymetry |
-| `bathymetry.variable` | str | — | Variable name (auto-detected if omitted) |
-| `bathymetry.pygmt_resolution` | str | — | e.g. `01m`, `30s` (default `01m`) |
-| `output.directory` | str | — | Output directory (default `ww3_grid_output`) |
-| `output.prefix` | str | — | File prefix (default `grid`) |
+| Key                             | Type  | Required            | Description                                    |
+| ------------------------------- | ----- | ------------------- | ---------------------------------------------- |
+| `grid.lon_min`                | float | ✓                  | West bound (degrees, −180–180 or 0–360)     |
+| `grid.lon_max`                | float | ✓                  | East bound                                     |
+| `grid.lat_min`                | float | ✓                  | South bound                                    |
+| `grid.lat_max`                | float | ✓                  | North bound                                    |
+| `grid.dx`                     | float | ✓                  | Longitude spacing (degrees)                    |
+| `grid.dy`                     | float | ✓                  | Latitude spacing (degrees)                     |
+| `grid.zdep`                   | float | —                  | Depth threshold m (default −0.10)             |
+| `grid.zmin`                   | float | —                  | Min depth for WW3 m (default 2.50)             |
+| `bathymetry.source`           | str   | —                  | `file` (default) or `pygmt`                |
+| `bathymetry.file`             | str   | ✓ (if source=file) | Path to NetCDF bathymetry                      |
+| `bathymetry.variable`         | str   | —                  | Variable name (auto-detected if omitted)       |
+| `bathymetry.pygmt_resolution` | str   | —                  | e.g.`01m`, `30s` (default `01m`)         |
+| `output.directory`            | str   | —                  | Output directory (default `ww3_grid_output`) |
+| `output.prefix`               | str   | —                  | File prefix (default `grid`)                 |
 
 **Internal workflow:**
 
@@ -239,6 +240,7 @@ convention used by MATLAB gridgen.
 gridgen examples.
 
 **Usage:**
+
 ```bash
 python prepMaskWW3.py <mask_file>
 # e.g.:
@@ -246,6 +248,7 @@ python prepMaskWW3.py my_grid/mygrid.mask
 ```
 
 **Logic:**
+
 - Reads mask with `np.loadtxt`.
 - Iterates over the **second row from each edge** (indices 1 and NY−2 for
   rows; 1 and NX−2 for columns).  Cells that are already `0` (land) are
@@ -268,11 +271,13 @@ finer grid using nearest-neighbour interpolation (`scipy.interpolate.griddata`).
 Rio de Janeiro example (see [Known Limitations](#known-limitations-and-differences)).
 
 **Usage** (after editing hardcoded values):
+
 ```bash
 python interpBatMaskWW3.py
 ```
 
 **Key parameters (edit in script):**
+
 ```python
 latMin, latMax = -26.8, -19.5
 lonMin, lonMax = 314.0, 322.0
@@ -333,6 +338,7 @@ Plain-text file with comment lines (starting with `$`) and WW3 grid parameters.
 Designed to be pasted directly into `ww3_grid.inp`.
 
 Example (Rio de Janeiro, 2.16′ resolution):
+
 ```
    'RECT'  T  'NONE'
     223       203
@@ -385,33 +391,35 @@ create_grid.m (master script)
 ```
 
 **Reference data required by MATLAB gridgen:**
+
 - `etopo1.nc` or `etopo2.nc` (global bathymetry, ~500 MB)
 - `coastal_bound_{coarse|low|inter|high|full}.mat` (GSHHS polygon databases)
 - Optional user-defined polygon `.flag` file
 
 ### Side-by-Side Feature Comparison
 
-| Feature | MATLAB gridgen | Python myWW3tools |
-|---------|---------------|-------------------|
-| **Grid geometry** | Rectilinear **and** curvilinear | Rectilinear only |
-| **Bathymetry source** | ETOPO1 / ETOPO2 (required) | Any NetCDF (GEBCO, ETOPO, etc.) or pygmt |
-| **Bathymetry interpolation** | Bilinear (fine) / area-average (coarse) | Bilinear (`RegularGridInterpolator`) |
-| **Mask generation** | Depth threshold + GSHHS polygon refinement | Depth threshold only |
-| **Lake / isolated body removal** | Yes (`remove_lake.m`) | **No** |
-| **Sub-grid obstructions** | Real (polygon × cell-edge intersection) | **All zeros** |
-| **Open-boundary markers** | `maskmod.m` (manual, post-step) | `prepMaskWW3.py` (same logic) |
-| **Resolution re-gridding** | Not included | `interpBatMaskWW3.py` / `interpObsWW3.py` |
-| **Configuration** | Hardcoded in `.m` script | YAML config file |
-| **Coordinate convention** | 0–360° only (internal) | −180–180° or 0–360° (auto-detected) |
-| **Output format** | Identical WW3 ASCII format | Identical WW3 ASCII format |
-| **Dependency** | MATLAB ≥ r2008a + NetCDF toolbox | Python 3 + numpy/scipy/xarray |
-| **Global grid support** | Yes (`IS_GLOBAL=1`, SMPL closure) | Yes (auto-detected) |
-| **Curvilinear grids** | Yes | No |
-| **Visualization** | MATLAB `pcolor` figures | `prepMaskWW3.py` matplotlib plot |
+| Feature                                | MATLAB gridgen                             | Python myWW3tools                             |
+| -------------------------------------- | ------------------------------------------ | --------------------------------------------- |
+| **Grid geometry**                | Rectilinear**and** curvilinear       | Rectilinear only                              |
+| **Bathymetry source**            | ETOPO1 / ETOPO2 (required)                 | Any NetCDF (GEBCO, ETOPO, etc.) or pygmt      |
+| **Bathymetry interpolation**     | Bilinear (fine) / area-average (coarse)    | Bilinear (`RegularGridInterpolator`)        |
+| **Mask generation**              | Depth threshold + GSHHS polygon refinement | Depth threshold only                          |
+| **Lake / isolated body removal** | Yes (`remove_lake.m`)                    | **No**                                  |
+| **Sub-grid obstructions**        | Real (polygon × cell-edge intersection)   | **All zeros**                           |
+| **Open-boundary markers**        | `maskmod.m` (manual, post-step)          | `prepMaskWW3.py` (same logic)               |
+| **Resolution re-gridding**       | Not included                               | `interpBatMaskWW3.py` / `interpObsWW3.py` |
+| **Configuration**                | Hardcoded in `.m` script                 | YAML config file                              |
+| **Coordinate convention**        | 0–360° only (internal)                   | −180–180° or 0–360° (auto-detected)      |
+| **Output format**                | Identical WW3 ASCII format                 | Identical WW3 ASCII format                    |
+| **Dependency**                   | MATLAB ≥ r2008a + NetCDF toolbox          | Python 3 + numpy/scipy/xarray                 |
+| **Global grid support**          | Yes (`IS_GLOBAL=1`, SMPL closure)        | Yes (auto-detected)                           |
+| **Curvilinear grids**            | Yes                                        | No                                            |
+| **Visualization**                | MATLAB `pcolor` figures                  | `prepMaskWW3.py` matplotlib plot            |
 
 ### Interpolation Method Detail
 
 **MATLAB `generate_grid.m`** uses an adaptive strategy:
+
 - If the target cell is **finer** than the source grid (`ndx ≤ 1 && ndy ≤ 1`):
   four-point bilinear interpolation using the four surrounding source cells.
 - If the target cell is **coarser** than the source grid: all source points
@@ -429,6 +437,7 @@ heterogeneous coastal zones.
 ### Mask Refinement Detail
 
 **MATLAB gridgen** performs a two-step mask refinement:
+
 1. Initial dry/wet flag from `generate_grid` (depth threshold).
 2. `clean_mask.m` uses the **GSHHS coastal polygon database** (5 resolution
    levels from 25 km coarse to full resolution) to correct coastal cells via
@@ -437,8 +446,8 @@ heterogeneous coastal zones.
 3. `remove_lake.m` labels disconnected water regions and removes them from the
    ocean mask.
 
-**Python `make_mask()`** applies a single depth threshold:  
-`mask = 1` where `elevation < zdep` (default −0.10 m), `0` elsewhere.  
+**Python `make_mask()`** applies a single depth threshold:
+`mask = 1` where `elevation < zdep` (default −0.10 m), `0` elsewhere.
 No polygon refinement is performed. In practice this is adequate when using
 high-resolution bathymetry (GEBCO 15-arc-second), but may misclassify some
 shallow coastal cells or leave isolated lake pixels classified as ocean.
@@ -447,34 +456,23 @@ shallow coastal cells or leave isolated lake pixels classified as ocean.
 
 ## Known Limitations and Differences
 
-1. **Hardcoded values in `interpBatMaskWW3.py` and `interpObsWW3.py`**  
-   The domain bounds and grid sizes are set to the Rio de Janeiro example.
+1. **Hardcoded values in `interpBatMaskWW3.py` and `interpObsWW3.py`**The domain bounds and grid sizes are set to the Rio de Janeiro example.
    Before using these scripts for a different domain, edit the seven parameters
    at the top of each file.
-
-2. **No real sub-grid obstructions**  
-   `genWW3grid_fromBounds.py` writes an all-zero `.obs` file.  
-   Sub-grid obstructions matter mainly for wave propagation through narrow
+2. **No real sub-grid obstructions**`genWW3grid_fromBounds.py` writes an all-zero `.obs` file.Sub-grid obstructions matter mainly for wave propagation through narrow
    straits (channels narrower than ~3× the grid cell). If your domain contains
    significant narrow passages, consider post-processing with a dedicated tool
    or the original MATLAB `create_obstr.m`.
-
-3. **No lake removal**  
-   Isolated water bodies (lakes, inland seas) will appear as ocean points in the
+3. **No lake removal**Isolated water bodies (lakes, inland seas) will appear as ocean points in the
    mask unless their elevation is positive. Check the mask visually with
    `prepMaskWW3.py` or a GIS tool.
-
-4. **Coordinate convention**  
-   MATLAB gridgen enforces 0–360° longitude internally. The Python scripts
+4. **Coordinate convention**MATLAB gridgen enforces 0–360° longitude internally. The Python scripts
    accept both −180–180° and 0–360°, but mixing conventions within a single
    run (e.g., `lon_min = -46`, source bathymetry in 0–360) is handled
    automatically by `interpolate_to_ww3_grid()`.
-
-5. **No curvilinear grid support**  
-   The Python scripts only handle regular (rectilinear) grids. For polar,
+5. **No curvilinear grid support**The Python scripts only handle regular (rectilinear) grids. For polar,
    rotated, or stretched grids, the MATLAB gridgen is still required.
-
-6. **`prepMaskWW3.py` boundary logic**  
+6. **`prepMaskWW3.py` boundary logic**
    The script marks only the **second** row/column from each edge (Python
    indices 1 and N−2), leaving the outermost ring as land — as required by WW3.
    For complex nested configurations, additional boundary adjustment may be
@@ -486,15 +484,15 @@ shallow coastal cells or leave isolated lake pixels classified as ocean.
 
 ### Rio de Janeiro (~3 km resolution)
 
-Located in `results_original_matlab/rio/`.  
+Located in `results_original_matlab/rio/`.
 Generated with MATLAB gridgen using ETOPO2 bathymetry.
 
-| Parameter | Value |
-|-----------|-------|
-| Domain | lon [314°, 322°] = [−46°W, −38°W]; lat [−26.8°, −19.5°] |
-| Resolution | 2.16 arc-min ≈ 3 km |
-| Grid size | 223 × 203 (NX × NY) |
-| Files | `rio.dep`, `rio.mask`, `rio.obs`, `rio.meta` |
+| Parameter  | Value                                                             |
+| ---------- | ----------------------------------------------------------------- |
+| Domain     | lon [314°, 322°] = [−46°W, −38°W]; lat [−26.8°, −19.5°] |
+| Resolution | 2.16 arc-min ≈ 3 km                                              |
+| Grid size  | 223 × 203 (NX × NY)                                             |
+| Files      | `rio.dep`, `rio.mask`, `rio.obs`, `rio.meta`              |
 
 To reproduce with Python (approximate — uses GEBCO instead of ETOPO2):
 
@@ -515,13 +513,7 @@ output:
   prefix: rio
 ```
 
-### Antarctica (~9 km and coarse)
-
-Located in `results_original_matlab/antartica/`.  
-Two grids: `antartica_9km` and `antartica_coarse`, with corresponding
-`ww3_grid.inp` input files.
-
 ---
 
-*Last updated: March 2026*  
+*Last updated: March 2026*
 *Reference: NOAA-EMC gridgen — [github.com/NOAA-EMC/gridgen](https://github.com/NOAA-EMC/gridgen)*
