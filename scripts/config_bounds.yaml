@@ -1,0 +1,159 @@
+# =============================================================================
+# config_bounds.yaml — Configuration for genWW3grid_fromBounds.py
+# =============================================================================
+#
+# Usage:
+#   python genWW3grid_fromBounds.py config_bounds.yaml
+#
+# Copy this file and edit for your region of interest.
+# =============================================================================
+
+
+# -----------------------------------------------------------------------------
+# GRID DOMAIN & RESOLUTION
+# -----------------------------------------------------------------------------
+grid:
+
+  # Longitude / Latitude bounds (degrees)
+  # Accepted conventions:
+  #   -180 to 180  (western hemisphere negative)
+  #    0   to 360  (all positive, e.g. 314 for -46°W)
+  lon_min: -46.0
+  lon_max: -38.0
+  lat_min: -26.0
+  lat_max: -18.0
+
+  # Grid spacing (degrees)
+  dx: 0.05   # ~5.5 km at these latitudes
+  dy: 0.05
+
+  # Depth thresholds for WW3
+  # zdep: grid cells with elevation > zdep (m) are classified as LAND
+  zdep: -0.10
+
+  # zmin: minimum allowed water depth (m) in WW3
+  zmin: 2.50
+
+
+# -----------------------------------------------------------------------------
+# BATHYMETRY SOURCE
+# -----------------------------------------------------------------------------
+bathymetry:
+
+  # --- Option 1: Local NetCDF file (recommended) ---
+  # Supported datasets: GEBCO 2022/2023, ETOPO1, ETOPO 2022, SRTM30, ...
+  # The elevation variable and lat/lon coordinate names are auto-detected.
+  # Download GEBCO: https://www.gebco.net/data_and_products/gridded_bathymetry_data/
+  source: file
+  file: /Users/jtakeo/googleDrive/myProjects/atmosMarine/ww3UnstGrid/data/bathy/bra_gebco.nc
+  # variable: elevation   # uncomment only if auto-detection fails
+
+  # --- Option 2: Download on-the-fly via pygmt ---
+  # Requires: pip install pygmt   AND   GMT installed (https://www.generic-mapping-tools.org/)
+  # Comment out the 'file' line above and uncomment below:
+  # source: pygmt
+  # pygmt_resolution: 01m   # '01m'=1 arc-min, '30s'=30 arc-sec, '15s'=15 arc-sec
+
+
+# -----------------------------------------------------------------------------
+# OUTPUT
+# -----------------------------------------------------------------------------
+output:
+  directory: rio_grid    # output directory (created automatically)
+  prefix:    rio         # filename prefix → rio.dep, rio.mask, rio.obs, rio.meta
+
+
+# =============================================================================
+# EXAMPLES
+# =============================================================================
+
+# --- Rio de Janeiro (~4 km resolution) ---
+# grid:
+#   lon_min: 314.0    # equivalent to -46°W
+#   lon_max: 322.0
+#   lat_min: -26.8
+#   lat_max: -19.5
+#   dx: 0.036         # 2.16 arc-minutes
+#   dy: 0.036
+# output:
+#   directory: rio_grid
+#   prefix: rio
+
+# --- Antarctica (9 km resolution) ---
+# grid:
+#   lon_min: 262.48
+#   lon_max: 349.97
+#   lat_min: -78.11
+#   lat_max: -40.16
+#   dx: 0.0833        # 5 arc-minutes
+#   dy: 0.0833
+# output:
+#   directory: antartica_grid
+#   prefix: antartica_9km
+
+# --- Global grid (0.5 degree resolution) ---
+# grid:
+#   lon_min: 0.0
+#   lon_max: 360.0
+#   lat_min: -90.0
+#   lat_max: 90.0
+#   dx: 0.5
+#   dy: 0.5
+# output:
+#   directory: global_grid
+#   prefix: global_0p5deg
+
+# --- North Atlantic (0.25 degree) ---
+# grid:
+#   lon_min: -100.0
+#   lon_max:   30.0
+#   lat_min:    0.0
+#   lat_max:   80.0
+#   dx: 0.25
+#   dy: 0.25
+# output:
+#   directory: natl_grid
+#   prefix: north_atlantic
+
+
+# =============================================================================
+# CURVILINEAR GRID EXAMPLES
+# =============================================================================
+
+# --- Curvilinear grid loaded from a NetCDF file ---
+# The NetCDF file must contain 2D (NY×NX) or 1D longitude and latitude arrays.
+# Common variable name pairs auto-detected:
+#   lon/lat, longitude/latitude, x_rho/y_rho, nav_lon/nav_lat, TLON/TLAT
+#
+# grid:
+#   type: curv
+#   curv_file: /path/to/roms_grid.nc   # NetCDF file with lon/lat arrays
+#   # Optionally specify variable names if auto-detection fails:
+#   # curv_lon_var: lon_rho
+#   # curv_lat_var: lat_rho
+# bathymetry:
+#   source: file
+#   file: /path/to/gebco.nc
+# output:
+#   directory: curv_grid
+#   prefix: my_curv_grid
+
+# --- Polar stereographic grid (Southern Ocean / Arctic) ---
+# Generates a uniform-km-spacing polar stereographic grid using the
+# Snyder inverse projection formula.
+# Required parameters: center_lon, center_lat, nx, ny, dx_km
+#
+# grid:
+#   type: curv
+#   projection: stereo
+#   center_lon: 0.0      # longitude of grid centre (degrees)
+#   center_lat: -90.0    # latitude  of grid centre (degrees, use -90 for S. Pole)
+#   nx: 200              # number of grid points in x (lon) direction
+#   ny: 200              # number of grid points in y (lat) direction
+#   dx_km: 9.0           # uniform horizontal spacing in km
+# bathymetry:
+#   source: file
+#   file: /path/to/gebco.nc
+# output:
+#   directory: stereo_grid
+#   prefix: antartica_stereo
