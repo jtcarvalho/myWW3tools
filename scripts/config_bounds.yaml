@@ -45,7 +45,7 @@ bathymetry:
   # The elevation variable and lat/lon coordinate names are auto-detected.
   # Download GEBCO: https://www.gebco.net/data_and_products/gridded_bathymetry_data/
   source: file
-  file: /Users/jtakeo/googleDrive/myProjects/atmosMarine/ww3UnstGrid/data/bathy/bra_gebco.nc
+  file: ../data/se_gebco.nc
   # variable: elevation   # uncomment only if auto-detection fails
 
   # --- Option 2: Download on-the-fly via pygmt ---
